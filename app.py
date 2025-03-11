@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, redirect, url_for, Response
+from flask import Flask, render_template, request, jsonify, redirect, url_for, Response, session
 import requests
 import os
 from dotenv import load_dotenv
@@ -9,6 +9,7 @@ from io import StringIO
 import csv
 
 app = Flask(__name__)
+app.secret_key = os.urandom(24)  # Required for session
 load_dotenv()
 API_KEY = os.getenv("OPENWEATHER_API_KEY")
 BASE_URL = "http://api.openweathermap.org/data/2.5/"
@@ -17,10 +18,11 @@ init_db()
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    weather_data = None
-    forecast_data = []
-    local_time = None
-    map_link = None
+    weather_data = session.pop('weather_data', None)
+    forecast_data = session.pop('forecast_data', None)
+    local_time = session.pop('local_time', None)  # Already a string
+    map_link = session.pop('map_link', None)
+
     if request.method == "POST":
         location = request.form.get("location")
         start_date = request.form.get("start_date")
@@ -49,10 +51,14 @@ def index():
                     except ValueError:
                         return "Error: Invalid date format (use YYYY-MM-DD)", 400
                 add_weather_request(location, weather_data["main"]["temp"], start_date, end_date, local_time.strftime('%Y-%m-%d %H:%M'))
-                return redirect(url_for("index"))  # Redirect after POST
+                session['weather_data'] = weather_data
+                session['forecast_data'] = forecast_data
+                session['local_time'] = local_time.strftime('%Y-%m-%d %H:%M')  # Consistent string
+                session['map_link'] = map_link
+                return redirect(url_for("index"))
             else:
                 return f"Error: Could not find weather for {location}", 400
-    # For GET requests (including refreshes)
+    
     requests_history = get_all_requests()
     return render_template("index.html", weather=weather_data, forecast=forecast_data, history=requests_history, local_time=local_time, map_link=map_link)
 
@@ -67,7 +73,15 @@ def current_location():
         utc_time = datetime.utcfromtimestamp(weather_data["dt"])
         timezone_offset = weather_data["timezone"]
         local_time = utc_time.replace(tzinfo=pytz.utc).astimezone(pytz.timezone("UTC")).replace(tzinfo=None) + timedelta(seconds=timezone_offset)
+        forecast_url = f"{BASE_URL}forecast?lat={lat}&lon={lon}&appid={API_KEY}&units=metric"  # Fixed to use lat/lon
+        forecast_response = requests.get(forecast_url)
+        if forecast_response.status_code == 200:
+            forecast_data = forecast_response.json()["list"][::8]
         add_weather_request(f"Lat:{lat},Lon:{lon}", weather_data["main"]["temp"], None, None, local_time.strftime('%Y-%m-%d %H:%M'))
+        session['weather_data'] = weather_data
+        session['forecast_data'] = forecast_data
+        session['local_time'] = local_time.strftime('%Y-%m-%d %H:%M')
+        session['map_link'] = f"https://www.google.com/maps?q={lat},{lon}"
         return redirect(url_for("index"))
     return jsonify({"error": "Unable to fetch weather"}), 400
 
