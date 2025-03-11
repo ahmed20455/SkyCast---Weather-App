@@ -25,7 +25,7 @@
                 <p>{{ weather.weather[0].description | capitalize }}</p>
                 <img src="http://openweathermap.org/img/wn/{{ weather.weather[0].icon }}@2x.png" alt="Weather Icon">
                 {% if local_time %}
-                    <p class="time">Observed: {{ local_time.strftime('%Y-%m-%d %H:%M') }} (Local Time)</p>
+                    <p class="time">Observed: {{ local_time }} (Local Time)</p>  <!-- No strftime -->
                 {% endif %}
                 {% if map_link %}
                     <p><a href="{{ map_link }}" target="_blank">View on Google Maps</a></p>
