@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SkyCast - Weather App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Weather App</h1>
+        <form method="POST" class="search-form">
+            <input type="text" name="location" placeholder="Enter city name" required>
+            <input type="date" name="start_date" placeholder="Start Date (YYYY-MM-DD)">
+            <input type="date" name="end_date" placeholder="End Date (YYYY-MM-DD)">
+            <button type="submit">Get Weather</button>
+            <p class="note">Note: Dates are for planning purposes; weather shown is current and 5-day forecast.</p>
+        </form>
+        <button onclick="getCurrentLocation()" class="location-btn">Use My Location</button>
+        <a href="/about" class="about-link">About</a>
+        <a href="/export/csv" class="export-link">Export History as CSV</a>
+
+        {% if weather %}
+            <div class="weather-card">
+                <h2>Current Weather in {{ weather.name }}</h2>
+                <p class="temp">{{ weather.main.temp }}°C</p>
+                <p>{{ weather.weather[0].description | capitalize }}</p>
+                <img src="http://openweathermap.org/img/wn/{{ weather.weather[0].icon }}@2x.png" alt="Weather Icon">
+                {% if local_time %}
+                    <p class="time">Observed: {{ local_time.strftime('%Y-%m-%d %H:%M') }} (Local Time)</p>
+                {% endif %}
+                {% if map_link %}
+                    <p><a href="{{ map_link }}" target="_blank">View on Google Maps</a></p>
+                {% endif %}
+            </div>
+        {% endif %}
+
+        {% if forecast %}
+            <h2>5-Day Forecast</h2>
+            <div class="forecast-container">
+                {% for day in forecast %}
+                    <div class="forecast-card">
+                        <p>{{ day.dt_txt.split()[0] }} {{ day.dt_txt.split()[1][:5] }}</p>
+                        <p>{{ day.main.temp }}°C</p>
+                        <p>{{ day.weather[0].description | capitalize }}</p>
+                        <img src="http://openweathermap.org/img/wn/{{ day.weather[0].icon }}@2x.png" alt="Forecast Icon">
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <h2>Request History</h2>
+        <div class="history-container">
+            {% for req in history %}
+                <div class="history-item">
+                    <p>ID: {{ req[0] }} | Location: {{ req[1] }} | Temp: {{ req[2] }}°C |
+                       {% if req[3] %}From: {{ req[3] }}{% endif %}
+                       {% if req[4] %}To: {{ req[4] }}{% endif %}
+                       {% if req[5] %}Observed: {{ req[5] }} (Local Time){% endif %} |
+                       Requested: {{ req[6] }}</p>
+                    <form method="POST" action="/update/{{ req[0] }}" class="inline-form">
+                        <input type="text" name="new_location" placeholder="New location">
+                        <button type="submit">Update</button>
+                    </form>
+                    <a href="/delete/{{ req[0] }}" class="delete-link">Delete</a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
