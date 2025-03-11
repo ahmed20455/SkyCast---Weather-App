@@ -53,4 +53,6 @@ SkyCast is a Flask-based web application that provides current weather informati
 - **script.js**: JavaScript for geolocation functionality.
 - **requirements.txt**: Python dependencies.
 
-
+## Notes
+- **Date Range**: Stored for planning purposes; weather data reflects current conditions and a 5-day forecast due to free API limitations.
+- **Database**: Persists in weather.db and retains history across sessions.
