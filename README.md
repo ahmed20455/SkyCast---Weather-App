@@ -28,8 +28,8 @@ SkyCast is a Flask-based web application that provides current weather informati
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/yourusername/skycast.git
-   cd skycast
+   git clone https://github.com/ahmed20455/SkyCast---Weather-App
+   cd SkyCast---Weather-App
 2. **Install Dependencies**:
    ```bash
    pip install -r requirements.txt
