@@ -36,7 +36,7 @@ SkyCast is a Flask-based web application that provides current weather informati
 3. **Run the App**:
    ```bash
    python app.py
-  -Open your browser to http://127.0.0.1:5000.
+  - Open your browser to http://127.0.0.1:5000.
   
 ## Usage
 - **Search Weather**: Enter a city name (e.g., "Tokyo") and optional dates, then click "Get Weather".
