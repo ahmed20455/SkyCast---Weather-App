@@ -108,7 +108,7 @@ def update(id):
             return f"Error: Could not find weather for {new_location}", 400
     return redirect(url_for("index"))
 
-@app.route("/delete/<int:id>")
+@app.route("/delete/<int:id>", methods=["POST"])
 def delete(id):
     delete_request(owner_id(),id)
     return redirect(url_for("index"))
