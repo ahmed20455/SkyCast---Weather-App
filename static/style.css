@@ -126,11 +126,22 @@ button:hover {
     gap: 5px;
 }
 
-.delete-link {
+
+button.delete-link {
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
     color: #dc3545;
     text-decoration: none;
+    cursor: pointer;
 }
 
-.delete-link:hover {
+button.delete-link:hover {
     text-decoration: underline;
+}
+
+button.delete-link:focus-visible {
+    outline: 3px solid #1a5fb4;
+    outline-offset: 2px;
 }
