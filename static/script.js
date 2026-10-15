@@ -10,13 +10,10 @@ function getCurrentLocation() {
                         lon: position.coords.longitude
                     })
                 })
-                .then(response => {
-                    if (response.redirected) {
-                        window.location.href = response.url;  // Follow redirect
-                    } else if (!response.ok) {
-                        return response.json().then(data => { throw new Error(data.error); });
-                    }
-                })
+                .then(response => response.json().then(data => {
+                    if (!response.ok) throw new Error (data.error || "Unable to fetch weather");
+                    window.location.href =  data.redirect;
+                }))
                 .catch(error => alert("Error: " + error.message));
             },
             (error) => alert("Geolocation failed: " + error.message)

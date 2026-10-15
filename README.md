@@ -4,13 +4,11 @@ SkyCast is a Flask-based web application that provides current weather informati
 
 ## Features
 
-### Tech Assessment 1
 - **Current Weather**: Enter a city name to get real-time weather data (temperature, description, icon) using the OpenWeatherMap API.
 - **5-Day Forecast**: Displays a 5-day weather forecast with daily details.
 - **Geolocation**: Use your current location to fetch weather data with a single click.
 - **Visual Appeal**: Weather icons enhance the user interface.
 
-### Tech Assessment 2
 - **CRUD Operations**:
   - **Create**: Add weather requests with optional start and end dates for planning.
   - **Read**: View a persistent history of all requests.

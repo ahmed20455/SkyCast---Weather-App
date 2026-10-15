@@ -23,7 +23,7 @@
                 <h2>Current Weather in {{ weather.name }}</h2>
                 <p class="temp">{{ weather.main.temp }}°C</p>
                 <p>{{ weather.weather[0].description | capitalize }}</p>
-                <img src="http://openweathermap.org/img/wn/{{ weather.weather[0].icon }}@2x.png" alt="Weather Icon">
+                <img src="https://openweathermap.org/img/wn/{{ weather.weather[0].icon }}@2x.png" alt="Weather Icon">
                 {% if local_time %}
                     <p class="time">Observed: {{ local_time }} (Local Time)</p>  <!-- No strftime -->
                 {% endif %}
@@ -41,7 +41,7 @@
                         <p>{{ day.dt_txt.split()[0] }} {{ day.dt_txt.split()[1][:5] }}</p>
                         <p>{{ day.main.temp }}°C</p>
                         <p>{{ day.weather[0].description | capitalize }}</p>
-                        <img src="http://openweathermap.org/img/wn/{{ day.weather[0].icon }}@2x.png" alt="Forecast Icon">
+                        <img src="https://openweathermap.org/img/wn/{{ day.weather[0].icon }}@2x.png" alt="Forecast Icon">
                     </div>
                 {% endfor %}
             </div>
@@ -51,7 +51,7 @@
         <div class="history-container">
             {% for req in history %}
                 <div class="history-item">
-                    <p>ID: {{ req[0] }} | Location: {{ req[1] }} | Temp: {{ req[2] }}°C |
+                    <p>ID: {{ loop.index }} | Location: {{ req[1] }} | Temp: {{ req[2] }}°C |
                        {% if req[3] %}From: {{ req[3] }}{% endif %}
                        {% if req[4] %}To: {{ req[4] }}{% endif %}
                        {% if req[5] %}Observed: {{ req[5] }} (Local Time){% endif %} |
