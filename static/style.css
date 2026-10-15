@@ -112,43 +112,102 @@ button:hover {
 }
 
 .history-item {
-    background-color: white;
-    padding: 10px;
+    background-color: #fff;
+    padding: 12px;
     border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    margin-bottom: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 12px;
+
     display: flex;
-    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 10px;
+
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+.history-details {
+    flex: 1 1 100%;
+    min-width: 0;
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+
+.history-actions {
+    display: flex;
+    flex-wrap: wrap;
     align-items: center;
+    gap: 10px;
+    width: 100%;
+    min-width: 0;
 }
 
 .inline-form {
-    display: inline-flex;
-    gap: 5px;
-    background-color: #187A32;
-    color: #FFFFFF;
+    display: flex;
+    flex: 1 1 220px;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    margin: 0;
+    background: transparent;
+    color: inherit;
 }
 
-.inline-form button[type="submit"] {
-    background-color: #0066CC;
-    color: #FFFFFF;
+.inline-form input[type="text"] {
+    flex: 1 1 120px;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+.inline-form button {
+    flex: 0 0 auto;
 }
 
 button.delete-link {
-    background: none;
+    background: transparent;
     border: none;
-    padding: 0;
+    padding: 8px 12px;
     font: inherit;
-    color: #dc3545;
-    text-decoration: none;
+    color: #b42332;
+    text-decoration: underline;
     cursor: pointer;
+    border-radius: 4px;
 }
 
 button.delete-link:hover {
-    text-decoration: underline;
+    color: #8f1725;
+    background-color: #fff0f1;
 }
 
 button.delete-link:focus-visible {
     outline: 3px solid #1a5fb4;
     outline-offset: 2px;
+}
+
+@media (max-width: 480px) {
+    .history-item {
+        padding: 10px;
+        gap: 12px;
+    }
+
+    .history-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .inline-form {
+        width: 100%;
+        flex: 1 1 auto;
+    }
+
+    .inline-form input[type="text"] {
+        flex: 1 1 100%;
+    }
+
+    .inline-form button {
+        min-height: 40px;
+    }
 }

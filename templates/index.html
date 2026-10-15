@@ -52,22 +52,33 @@
         <h2>Request History</h2>
         <div class="history-container">
             {% for req in history %}
+
             <div class="history-item">
-                <p>ID: {{ loop.index }} | Location: {{ req[1] }} | Temp: {{ req[2] }}°C |
+                <p class="history-details">
+                    ID: {{ loop.index }} |
+                    Location: {{ req[1] }} |
+                    Temp: {{ req[2] }}°C |
                     {% if req[3] %}From: {{ req[3] }}{% endif %}
                     {% if req[4] %}To: {{ req[4] }}{% endif %}
                     {% if req[5] %}Observed: {{ req[5] }} (Local Time){% endif %} |
-                    Requested: {{ req[6] }}</p>
-                <form method="POST" action="/update/{{ req[0] }}" class="inline-form">
-                    <input type="text" name="new_location" placeholder="New location">
-                    <button type="submit">Update</button>
-                </form>
-                <form method="POST" action="{{ url_for('delete', id=req[0]) }}" class="inline-form">
-                    <button type="submit" class="delete-link" aria-label="Delete history entry for {{ req[1] }}">
-                        Delete
-                    </button>
-                </form>
+                    Requested: {{ req[6] }}
+                </p>
+
+                <div class="history-actions">
+                    <form method="POST" action="/update/{{ req[0] }}" class="inline-form">
+                        <input type="text" name="new_location" placeholder="New location"
+                            aria-label="New location for {{ req[1] }}" required>
+                        <button type="submit">Update</button>
+                    </form>
+
+                    <form method="POST" action="{{ url_for('delete', id=req[0]) }}" class="inline-form">
+                        <button type="submit" class="delete-link" aria-label="Delete history entry for {{ req[1] }}">
+                            Delete
+                        </button>
+                    </form>
+                </div>
             </div>
+
             {% endfor %}
         </div>
     </main>
