@@ -32,8 +32,8 @@ input[type="text"], input[type="date"] {
 
 button {
     padding: 8px 16px;
-    background-color: #007BFF;
-    color: white;
+    background-color: #0066CC;
+    color: #FFFFFF;
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -44,7 +44,8 @@ button:hover {
 }
 
 .location-btn {
-    background-color: #28a745;
+    background-color: #187A32;
+     color: #FFFFFF;
 }
 
 .location-btn:hover {
@@ -55,11 +56,11 @@ button:hover {
     display: block;
     text-align: center;
     margin: 10px 0;
-    color: #007BFF;
+    color: #0056B3;
 }
 
 .export-link {
-    color: #28a745;
+    color: #187A32;
 }
 
 .note {
@@ -124,8 +125,14 @@ button:hover {
 .inline-form {
     display: inline-flex;
     gap: 5px;
+    background-color: #187A32;
+    color: #FFFFFF;
 }
 
+.inline-form button[type="submit"] {
+    background-color: #0066CC;
+    color: #FFFFFF;
+}
 
 button.delete-link {
     background: none;
